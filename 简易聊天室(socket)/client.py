@@ -39,13 +39,13 @@ class ChatClient:
         receive_thread = threading.Thread(target=self.receive_message, args=(client,))
         receive_thread.start()
         
-        # 发送用户昵称给服务器
+        # 发送用户昵称给服务器, 服务器告诉其他人用户加入了聊天室
         client.send(nickname.encode('utf-8'))
         
         # 持续接收用户输入并发送消息
         while True:
             message = input('')  # 等待用户输入消息
-            if message == 'quit':  # 如果用户输入quit，则退出聊天
+            if message in ('quit', 'exit'):  # 如果用户输入quit，则退出聊天
                 client.close()  # 关闭与服务器的连接
                 break
             # 格式化消息（包含昵称）并发送给服务器

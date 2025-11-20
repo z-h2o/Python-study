@@ -26,8 +26,6 @@ class ChatServer:
                 message = client.recv(1024)
                 if not message:  # 如果客户端主动关闭连接
                     break
-                # 给发送消息的用户单独回复"正在监听中..."
-                client.send('正在监听中...'.encode('utf-8'))
                 self.broadcast(message, client)  # 广播收到的消息
             except Exception:
                 # 处理其他异常情况（如网络错误）
@@ -62,8 +60,9 @@ class ChatServer:
             print(f'用户昵称：{nickname}---->连接成功：{str(address)}')
 
             # 广播新用户加入通知
-            self.broadcast(f'{nickname} 加入了聊天室！'.encode('utf-8'))
-            # client.send('成功连接到服务器！'.encode('utf-8'))  # 向新客户端发送连接成功消息
+            self.broadcast(f'{nickname} 加入了聊天室！'.encode('utf-8'), client)
+            # 向新用户发送欢迎信息
+            client.send(f'你好{nickname}🎆🎆🎆，欢迎来到聊天室！🌺🌺🌺\n'.encode('utf-8'))
             
             # 为客户端创建独立线程处理消息
             thread = threading.Thread(target=self.handle_client, args=(client,))

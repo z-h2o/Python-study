@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+<head><title>Sales Report</title></head>
+<body>
+  <h1>销售报告</h1>
+  <p>总销售额: {{ total_sales }}</p>
+  <h2>Top 5 产品</h2>
+  {{ top_products_table|safe }}
+  <img src="top_products.png">
+</body>
+</html>
